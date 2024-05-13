@@ -15,7 +15,7 @@ interface ResponseStructure {
   success: boolean;
   data: any;
   errorCode?: number;
-  errorMessage?: string;
+  message?: string;
   showType?: ErrorShowType;
 }
 
@@ -29,12 +29,11 @@ export const errorConfig: RequestConfig = {
   errorConfig: {
     // 错误抛出
     errorThrower: (res) => {
-      const { success, data, errorCode, errorMessage, showType } =
-        res as unknown as ResponseStructure;
+      const { success, data, errorCode, message, showType } = res as unknown as ResponseStructure;
       if (!success) {
-        const error: any = new Error(errorMessage);
+        const error: any = new Error(message);
         error.name = 'BizError';
-        error.info = { errorCode, errorMessage, showType, data };
+        error.info = { errorCode, message, showType, data };
         throw error; // 抛出自制的错误
       }
     },
@@ -45,7 +44,7 @@ export const errorConfig: RequestConfig = {
       if (error.name === 'BizError') {
         const errorInfo: ResponseStructure | undefined = error.info;
         if (errorInfo) {
-          const { errorMessage, errorCode } = errorInfo;
+          const { message: errorMessage, errorCode } = errorInfo;
           switch (errorInfo.showType) {
             case ErrorShowType.SILENT:
               // do nothing
@@ -89,8 +88,12 @@ export const errorConfig: RequestConfig = {
   requestInterceptors: [
     (config: RequestOptions) => {
       // 拦截请求配置，进行个性化处理。
-      const url = config?.url?.concat('?token = 123');
-      return { ...config, url };
+      const token = localStorage.getItem('USER_CENTER_TOKEN');
+      if (token && config.headers) {
+        // 在请求头中添加 token
+        config.headers['Authorization'] = `Bearer ${token}`;
+      }
+      return { ...config };
     },
   ],
 
@@ -98,11 +101,11 @@ export const errorConfig: RequestConfig = {
   responseInterceptors: [
     (response) => {
       // 拦截响应数据，进行个性化处理
-      const { data } = response as unknown as ResponseStructure;
+      // const { data } = response as unknown as ResponseStructure;
 
-      if (data?.success === false) {
-        message.error('请求失败！');
-      }
+      // if (data?.success === false) {
+      //   message.error('请求失败！');
+      // }
       return response;
     },
   ],

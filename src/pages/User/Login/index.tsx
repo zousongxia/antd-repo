@@ -3,8 +3,8 @@ import { login } from '@/services/ant-design-pro/api';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
 import { FormattedMessage, history, useModel, Helmet, Link } from '@umijs/max';
-import { Alert, message, Tabs } from 'antd';
-import React, { useState } from 'react';
+import { message, Tabs } from 'antd';
+import React from 'react';
 import { flushSync } from 'react-dom';
 import { createStyles } from 'antd-style';
 
@@ -44,24 +44,7 @@ const useStyles = createStyles(({ token }) => {
   };
 });
 
-const LoginMessage: React.FC<{
-  content: string;
-}> = ({ content }) => {
-  return (
-    <Alert
-      style={{
-        marginBottom: 24,
-      }}
-      message={content}
-      type="error"
-      showIcon
-    />
-  );
-};
-
 const Login: React.FC = () => {
-  const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
-  const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
   const { styles } = useStyles();
 
@@ -78,25 +61,20 @@ const Login: React.FC = () => {
   };
 
   const handleSubmit = async (values: API.LoginParams) => {
-    try {
-      // 登录
-      const user = await login({ ...values, type });
-      if (user) {
-        message.success('登录成功！');
-        await fetchUserInfo();
-        const urlParams = new URL(window.location.href).searchParams;
-        history.push(urlParams.get('redirect') || '/');
-        return;
-      }
-      console.log('user', user);
-      // 如果失败去设置用户错误信息
-      setUserLoginState(user);
-    } catch (error) {
-      console.log(error);
-      message.error('登录失败，请重试！');
+    // 登录
+    const result = await login(values);
+    console.log('result', result);
+    if (result.success) {
+      message.success('登录成功！');
+      localStorage.setItem('USER_CENTER_TOKEN', result.data?.token ?? '');
+      await fetchUserInfo();
+      const urlParams = new URL(window.location.href).searchParams;
+      console.log('urlParams', urlParams);
+      // history.push(urlParams.get('redirect') || '/');
+      history.push('/admin');
+      return;
     }
   };
-  const { status, type: loginType } = userLoginState;
 
   return (
     <div className={styles.container}>
@@ -124,8 +102,8 @@ const Login: React.FC = () => {
           }}
         >
           <Tabs
-            activeKey={type}
-            onChange={setType}
+            activeKey="account"
+            // onChange={setType}
             centered
             items={[
               {
@@ -135,46 +113,41 @@ const Login: React.FC = () => {
             ]}
           />
 
-          {status === 'error' && loginType === 'account' && (
-            <LoginMessage content={'账户或密码错误'} />
-          )}
-          {type === 'account' && (
-            <>
-              <ProFormText
-                name="userAccount"
-                fieldProps={{
-                  size: 'large',
-                  prefix: <UserOutlined />,
-                }}
-                placeholder="请输入账号"
-                rules={[
-                  {
-                    required: true,
-                    message: '账号不能为空!',
-                  },
-                ]}
-              />
-              <ProFormText.Password
-                name="userPassword"
-                fieldProps={{
-                  size: 'large',
-                  prefix: <LockOutlined />,
-                }}
-                placeholder="请输入密码"
-                rules={[
-                  {
-                    required: true,
-                    message: '密码不能为空!',
-                  },
-                  {
-                    min: 8,
-                    type: 'string',
-                    message: '长度不能小于8位',
-                  },
-                ]}
-              />
-            </>
-          )}
+          <>
+            <ProFormText
+              name="userAccount"
+              fieldProps={{
+                size: 'large',
+                prefix: <UserOutlined />,
+              }}
+              placeholder="请输入账号"
+              rules={[
+                {
+                  required: true,
+                  message: '账号不能为空!',
+                },
+              ]}
+            />
+            <ProFormText.Password
+              name="userPassword"
+              fieldProps={{
+                size: 'large',
+                prefix: <LockOutlined />,
+              }}
+              placeholder="请输入密码"
+              rules={[
+                {
+                  required: true,
+                  message: '密码不能为空!',
+                },
+                {
+                  min: 8,
+                  type: 'string',
+                  message: '长度不能小于8位',
+                },
+              ]}
+            />
+          </>
 
           <div
             style={{

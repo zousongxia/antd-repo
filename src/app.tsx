@@ -12,6 +12,11 @@ const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 
 /**
+ * 无需登录态的页面
+ */
+const WHITE_LIST = [loginPath, '/user/register'];
+
+/**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
 export async function getInitialState(): Promise<{
@@ -25,6 +30,7 @@ export async function getInitialState(): Promise<{
       const msg = await queryCurrentUser({
         skipErrorHandler: true,
       });
+      console.log('msg', msg);
       return msg.data;
     } catch (error) {
       history.push(loginPath);
@@ -33,7 +39,7 @@ export async function getInitialState(): Promise<{
   };
   // 如果不是登录页面，执行
   const { location } = history;
-  if (location.pathname !== loginPath) {
+  if (!WHITE_LIST.includes(location.pathname)) {
     const currentUser = await fetchUserInfo();
     return {
       fetchUserInfo,
@@ -52,18 +58,21 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
   return {
     actionsRender: () => [<Question key="doc" />, <SelectLang key="SelectLang" />],
     avatarProps: {
-      src: initialState?.currentUser?.avatar,
+      src: initialState?.currentUser?.avatarUrl,
       title: <AvatarName />,
       render: (_, avatarChildren) => {
         return <AvatarDropdown>{avatarChildren}</AvatarDropdown>;
       },
     },
     waterMarkProps: {
-      content: initialState?.currentUser?.name,
+      content: initialState?.currentUser?.userAccount,
     },
     footerRender: () => <Footer />,
     onPageChange: () => {
       const { location } = history;
+      if (WHITE_LIST.includes(location.pathname)) {
+        return;
+      }
       // 如果没有登录，重定向到 login
       if (!initialState?.currentUser && location.pathname !== loginPath) {
         history.push(loginPath);

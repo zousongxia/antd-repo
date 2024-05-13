@@ -58,9 +58,10 @@ const Register: React.FC = () => {
       const result = await register({ ...values, type });
       if (result.success) {
         message.success('注册成功！');
-        const urlParams = new URL(window.location.href).searchParams;
-        history.push(urlParams.get('redirect') || '/user/login');
+        history.push('/user/login');
         return;
+      } else {
+        message.error(result.message);
       }
     } catch (error) {
       console.log(error);
@@ -95,7 +96,7 @@ const Register: React.FC = () => {
             autoLogin: true,
           }}
           onFinish={async (values) => {
-            await handleSubmit(values as API.LoginParams);
+            await handleSubmit(values as API.RegisterParams);
           }}
         >
           <Tabs
