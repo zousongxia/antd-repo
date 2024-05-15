@@ -1,6 +1,7 @@
 ﻿import type { RequestOptions } from '@@/plugin-request/request';
 import type { RequestConfig } from '@umijs/max';
 import { message, notification } from 'antd';
+import { USER_CENTER_TOKEN } from './constant';
 
 // 错误处理方案： 错误类型
 enum ErrorShowType {
@@ -88,7 +89,7 @@ export const errorConfig: RequestConfig = {
   requestInterceptors: [
     (config: RequestOptions) => {
       // 拦截请求配置，进行个性化处理。
-      const token = localStorage.getItem('USER_CENTER_TOKEN');
+      const token = localStorage.getItem(USER_CENTER_TOKEN);
       if (token && config.headers) {
         // 在请求头中添加 token
         config.headers['Authorization'] = `Bearer ${token}`;

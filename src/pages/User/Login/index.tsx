@@ -7,6 +7,7 @@ import { message, Tabs } from 'antd';
 import React from 'react';
 import { flushSync } from 'react-dom';
 import { createStyles } from 'antd-style';
+import { USER_CENTER_TOKEN } from '@/constant';
 
 const useStyles = createStyles(({ token }) => {
   return {
@@ -66,12 +67,11 @@ const Login: React.FC = () => {
     console.log('result', result);
     if (result.success) {
       message.success('登录成功！');
-      localStorage.setItem('USER_CENTER_TOKEN', result.data?.token ?? '');
+      localStorage.setItem(USER_CENTER_TOKEN, result.data?.token ?? '');
       await fetchUserInfo();
       const urlParams = new URL(window.location.href).searchParams;
-      console.log('urlParams', urlParams);
-      // history.push(urlParams.get('redirect') || '/');
-      history.push('/admin');
+      console.log('urlParams', urlParams.get('redirect'));
+      history.push(urlParams.get('redirect') || '/');
       return;
     }
   };
