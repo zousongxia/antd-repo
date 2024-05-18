@@ -64,13 +64,11 @@ const Login: React.FC = () => {
   const handleSubmit = async (values: API.LoginParams) => {
     // 登录
     const result = await login(values);
-    console.log('result', result);
     if (result.success) {
       message.success('登录成功！');
       localStorage.setItem(USER_CENTER_TOKEN, result.data?.token ?? '');
       await fetchUserInfo();
       const urlParams = new URL(window.location.href).searchParams;
-      console.log('urlParams', urlParams.get('redirect'));
       history.push(urlParams.get('redirect') || '/');
       return;
     }

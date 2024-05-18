@@ -29,7 +29,7 @@ export default [
   },
   {
     path: '/welcome',
-    name: 'welcome',
+    name: '工作台',
     icon: 'smile',
     component: './Welcome',
   },
@@ -64,5 +64,30 @@ export default [
     path: '*',
     layout: false,
     component: './404',
+  },
+  {
+    path: '/code',
+    name: '代码',
+    icon: 'javaScript',
+    // component: './Code',
+    routes: [
+      {
+        path: '/code',
+        redirect: '/code/concurrent-request',
+      },
+      {
+        path: '/code/concurrent-request',
+        name: '并发请求',
+        component: './Code/ConcurrentRequest',
+      },
+      // {
+      //   path: '/code/add',
+      //   name: '添加代码',
+      //   component: './Code/Add',
+      // },
+      // {
+      //   path: '/code/edit',
+      // },
+    ],
   },
 ];
