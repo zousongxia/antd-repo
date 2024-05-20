@@ -69,7 +69,6 @@ export default [
     path: '/code',
     name: '代码',
     icon: 'javaScript',
-    // component: './Code',
     routes: [
       {
         path: '/code',
@@ -80,14 +79,22 @@ export default [
         name: '并发请求',
         component: './Code/ConcurrentRequest',
       },
-      // {
-      //   path: '/code/add',
-      //   name: '添加代码',
-      //   component: './Code/Add',
-      // },
-      // {
-      //   path: '/code/edit',
-      // },
+    ],
+  },
+  {
+    path: '/algorithm',
+    name: '算法',
+    icon: 'deploymentUnit',
+    routes: [
+      {
+        path: '/algorithm',
+        redirect: '/algorithm/quick-sort',
+      },
+      {
+        path: '/algorithm/quick-sort',
+        name: '快速排序',
+        component: './Algorithm/QuickSort',
+      },
     ],
   },
 ];
