@@ -1,11 +1,40 @@
 import { PageHeader } from '@ant-design/pro-components';
-import { Card } from 'antd';
 import React, { useEffect } from 'react';
 import { myLimitPromise } from './concurrentRequest';
+import CodeDisplay from '@/components/CodeDisplay';
 
 const requestURL = Array.from({ length: 10 }, (_, k) => `/api/code/concurrent?key=${k + 1}`);
 
 function ConcurrentRequest() {
+  const code = `function myLimitPromise(urls: string[] = [], limit: number = 3) {
+  let index = 0;
+  const requestArr: any[] = [];
+  const activeArr: any[] = [];
+
+  function run(): Promise<any> {
+    if (index >= urls.length) {
+      return Promise.resolve();
+    }
+    const currentRequest = request(urls[index++]);
+    requestArr.push(currentRequest);
+
+    const currentRequestPromise = currentRequest.then(() => {
+      activeArr.splice(activeArr.indexOf(currentRequestPromise), 1);
+    });
+
+    activeArr.push(currentRequestPromise);
+
+    let currentPromise = Promise.resolve();
+
+    if (activeArr.length >= limit) {
+      currentPromise = Promise.race(activeArr);
+    }
+
+    return currentPromise.then(run);
+  }
+
+  return run()?.then(() => Promise.all(requestArr));
+}`;
   useEffect(() => {
     // limitConcurrency(requestURL, 3)
     //   .then((responses: any[]) => {
@@ -27,7 +56,7 @@ function ConcurrentRequest() {
 
   return (
     <PageHeader title="并发请求">
-      <Card />
+      <CodeDisplay code={code} />
     </PageHeader>
   );
 }
