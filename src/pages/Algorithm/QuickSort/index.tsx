@@ -8,7 +8,7 @@ import CodeDisplay from '@/components/CodeDisplay';
 
 const App = () => {
   // const [edit, setEdit] = useState(false);
-  const code = `export function quickSort(arr: number[]): number[] {
+  const code = `function quickSort(arr: number[]): number[] {
   const sortArr = [...arr];
   if (sortArr.length <= 1) {
     return sortArr;

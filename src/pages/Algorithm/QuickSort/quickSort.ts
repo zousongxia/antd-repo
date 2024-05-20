@@ -3,7 +3,7 @@
  * @param arr 数组
  * @returns
  */
-export function quickSort(arr: number[]): number[] {
+function quickSort(arr: number[]): number[] {
   const sortArr = [...arr];
   if (sortArr.length <= 1) {
     return sortArr;
@@ -22,3 +22,5 @@ export function quickSort(arr: number[]): number[] {
   }
   return quickSort(left).concat(pivot, quickSort(right));
 }
+
+export { quickSort };

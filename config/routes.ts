@@ -95,6 +95,11 @@ export default [
         name: '快速排序',
         component: './Algorithm/QuickSort',
       },
+      {
+        path: '/algorithm/bubble-sort',
+        name: '冒泡排序',
+        component: './Algorithm/BubbleSort',
+      },
     ],
   },
 ];
