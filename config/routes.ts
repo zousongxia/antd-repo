@@ -100,6 +100,11 @@ export default [
         name: '冒泡排序',
         component: './Algorithm/BubbleSort',
       },
+      {
+        path: '/algorithm/selection-sort',
+        name: '选择排序',
+        component: './Algorithm/SelectionSort',
+      },
     ],
   },
 ];

@@ -19,8 +19,8 @@ const App = () => {
   useEffect(() => {
     const originArr = [56, 23, 34, 144, 1, 23, 112, 86, 55, 55];
     const sortArr = bubbleSort(originArr);
-    console.log('originArr', originArr);
-    console.log('sortArr', sortArr);
+    console.log('原数组', originArr);
+    console.log('冒泡排序', sortArr);
   }, []);
 
   return (
