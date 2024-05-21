@@ -4,7 +4,7 @@ import { PageHeader } from '@ant-design/pro-components';
 import { selectionSort } from './selectionSort';
 import CodeDisplay from '@/components/CodeDisplay';
 
-const App = () => {
+const SelectionSort = () => {
   const code = `function selectionSort(arr: Array<number>) {
   const sortArr = [...arr];
   for (let i = 0; i < sortArr.length - 1; i++) {
@@ -35,4 +35,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default SelectionSort;

@@ -4,7 +4,7 @@ import { PageHeader } from '@ant-design/pro-components';
 import { bubbleSort } from './bubbleSort';
 import CodeDisplay from '@/components/CodeDisplay';
 
-const App = () => {
+const BubbleSort = () => {
   const code = `function bubbleSort(arr: number[]) {
   for (let i = 0; i < arr.length - 1; i++) {
     for (let j = 0; j < arr.length - i - 1; j++) {
@@ -30,4 +30,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default BubbleSort;

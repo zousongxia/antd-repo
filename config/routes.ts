@@ -79,6 +79,11 @@ export default [
         name: '并发请求',
         component: './Code/ConcurrentRequest',
       },
+      {
+        path: '/code/red-package',
+        name: '随机分配红包',
+        component: './Code/RedPackage',
+      },
     ],
   },
   {

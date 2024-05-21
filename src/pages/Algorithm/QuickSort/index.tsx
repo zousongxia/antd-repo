@@ -6,7 +6,7 @@ import { quickSort } from './quickSort';
 // import CodeEditor from '@/components/CodeEditor';
 import CodeDisplay from '@/components/CodeDisplay';
 
-const App = () => {
+const QuickSort = () => {
   // const [edit, setEdit] = useState(false);
   const code = `function quickSort(arr: number[]): number[] {
   const sortArr = [...arr];
@@ -55,4 +55,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default QuickSort;
