@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { PageHeader } from '@ant-design/pro-components';
 
-import { redPackage } from './redPackage';
+import { myRedPacket } from './redPacket';
 import CodeDisplay from '@/components/CodeDisplay';
 import { Button } from 'antd';
 
@@ -31,7 +31,7 @@ const RedPackage = () => {
 }`;
 
   useEffect(() => {
-    const result = redPackage(100, 10);
+    const result = myRedPacket(100, 10);
     const sum = result.reduce((pre, cur) => pre + cur, 0);
     console.log('随机红包:', result, '红包总金额', sum); // 输出一个包含10个元素的数组，总和为100
   }, [refresh]);
@@ -39,7 +39,7 @@ const RedPackage = () => {
   return (
     <PageHeader
       title="随机分配红包"
-      subTitle="实现一个随机分发红包的函数function redPackage(total = 100,count = 10){} //返回一个数组a,a.length = count，且元素总和为100"
+      subTitle="实现一个随机分发红包的函数function redPacket(total = 100,count = 10){} //返回一个数组a,a.length = count，且元素总和为100"
       extra={
         <Button type="primary" onClick={() => setRefresh(!refresh)}>
           刷新
