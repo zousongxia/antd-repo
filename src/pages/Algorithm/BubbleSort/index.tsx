@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PageHeader } from '@ant-design/pro-components';
 
 import { bubbleSort } from './bubbleSort';
 import CodeDisplay from '@/components/CodeDisplay';
+import { Button } from 'antd';
 
 const BubbleSort = () => {
+  const [refresh, setRefresh] = useState(false);
   const code = `function bubbleSort(arr: number[]) {
   for (let i = 0; i < arr.length - 1; i++) {
     for (let j = 0; j < arr.length - i - 1; j++) {
@@ -21,10 +23,17 @@ const BubbleSort = () => {
     const sortArr = bubbleSort(originArr);
     console.log('原数组', originArr);
     console.log('冒泡排序', sortArr);
-  }, []);
+  }, [refresh]);
 
   return (
-    <PageHeader title="冒泡排序">
+    <PageHeader
+      title="冒泡排序"
+      extra={
+        <Button type="primary" onClick={() => setRefresh(!refresh)}>
+          刷新
+        </Button>
+      }
+    >
       <CodeDisplay code={code} />
     </PageHeader>
   );

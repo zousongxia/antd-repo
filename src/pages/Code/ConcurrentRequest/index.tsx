@@ -1,11 +1,13 @@
 import { PageHeader } from '@ant-design/pro-components';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { myLimitPromise } from './concurrentRequest';
 import CodeDisplay from '@/components/CodeDisplay';
+import { Button } from 'antd';
 
 const requestURL = Array.from({ length: 10 }, (_, k) => `/api/code/concurrent?key=${k + 1}`);
 
 function ConcurrentRequest() {
+  const [refresh, setRefresh] = useState(false);
   const code = `function myLimitPromise(urls: string[] = [], limit: number = 3) {
   let index = 0;
   const requestArr: any[] = [];
@@ -52,10 +54,17 @@ function ConcurrentRequest() {
       .catch((error: any) => {
         console.error('Some request failed', error);
       });
-  }, []);
+  }, [refresh]);
 
   return (
-    <PageHeader title="并发请求">
+    <PageHeader
+      title="并发请求"
+      extra={
+        <Button type="primary" onClick={() => setRefresh(!refresh)}>
+          刷新
+        </Button>
+      }
+    >
       <CodeDisplay code={code} />
     </PageHeader>
   );

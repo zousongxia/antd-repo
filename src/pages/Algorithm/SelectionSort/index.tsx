@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PageHeader } from '@ant-design/pro-components';
+import { Button } from 'antd';
 
 import { selectionSort } from './selectionSort';
 import CodeDisplay from '@/components/CodeDisplay';
 
 const SelectionSort = () => {
+  const [refresh, setRefresh] = useState(false);
   const code = `function selectionSort(arr: Array<number>) {
   const sortArr = [...arr];
   for (let i = 0; i < sortArr.length - 1; i++) {
@@ -26,10 +28,17 @@ const SelectionSort = () => {
     const selectionSortArr = selectionSort(originArr);
     console.log('原数组', originArr);
     console.log('选择排序', selectionSortArr);
-  }, []);
+  }, [refresh]);
 
   return (
-    <PageHeader title="选择排序">
+    <PageHeader
+      title="选择排序"
+      extra={
+        <Button type="primary" onClick={() => setRefresh(!refresh)}>
+          刷新
+        </Button>
+      }
+    >
       <CodeDisplay code={code} />
     </PageHeader>
   );

@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PageHeader } from '@ant-design/pro-components';
 // import { Button } from 'antd';
 
 import { quickSort } from './quickSort';
 // import CodeEditor from '@/components/CodeEditor';
 import CodeDisplay from '@/components/CodeDisplay';
+import { Button } from 'antd';
 
 const QuickSort = () => {
   // const [edit, setEdit] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const code = `function quickSort(arr: number[]): number[] {
   const sortArr = [...arr];
   if (sortArr.length <= 1) {
@@ -38,7 +40,7 @@ const QuickSort = () => {
     const sortArr = quickSort(originArr);
     console.log('原数组', originArr);
     console.log('快速排序', sortArr);
-  }, []);
+  }, [refresh]);
 
   return (
     <PageHeader
@@ -48,6 +50,11 @@ const QuickSort = () => {
       //     {edit ? '取消' : '编辑'}
       //   </Button>
       // }
+      extra={
+        <Button type="primary" onClick={() => setRefresh(!refresh)}>
+          刷新
+        </Button>
+      }
     >
       {/* {edit ? <CodeEditor code={code} setCode={setCode} /> : <CodeDisplay code={code} />} */}
       <CodeDisplay code={code} />
