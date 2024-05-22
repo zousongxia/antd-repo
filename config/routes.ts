@@ -80,6 +80,11 @@ export default [
         component: './Code/ConcurrentRequest',
       },
       {
+        path: '/code/timeout-retry',
+        name: '接口超时重试',
+        component: './Code/TimeoutRetry',
+      },
+      {
         path: '/code/red-package',
         name: '随机分配红包',
         component: './Code/RedPackage',
