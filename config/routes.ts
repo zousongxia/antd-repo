@@ -89,6 +89,11 @@ export default [
         name: '随机分配红包',
         component: './Code/RedPackage',
       },
+      {
+        path: '/code/promise-execution-order',
+        name: 'Promise执行顺序',
+        component: './Code/PromiseExecutionOrder',
+      },
     ],
   },
   {
