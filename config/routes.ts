@@ -94,6 +94,11 @@ export default [
         name: 'Promise执行顺序',
         component: './Code/PromiseExecutionOrder',
       },
+      {
+        path: '/code/permute-unique',
+        name: '字符串全排列',
+        component: './Code/PermuteUnique',
+      },
     ],
   },
   {
