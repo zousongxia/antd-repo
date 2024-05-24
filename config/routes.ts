@@ -90,9 +90,9 @@ export default [
         component: './Code/RedPackage',
       },
       {
-        path: '/code/promise-execution-order',
-        name: 'Promise执行顺序',
-        component: './Code/PromiseExecutionOrder',
+        path: '/code/promise-exercise',
+        name: 'Promise面试题',
+        component: './Code/PromiseExercise',
       },
       {
         path: '/code/permute-unique',
