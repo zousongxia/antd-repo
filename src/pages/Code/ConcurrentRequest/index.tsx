@@ -4,7 +4,7 @@ import { myLimitPromise } from './concurrentRequest';
 import CodeDisplay from '@/components/CodeDisplay';
 import { Button } from 'antd';
 
-const requestURL = Array.from({ length: 10 }, (_, k) => `/api/code/concurrent?key=${k + 1}`);
+export const requestURL = Array.from({ length: 10 }, (_, k) => `/api/code/concurrent?key=${k + 1}`);
 
 function ConcurrentRequest() {
   const [refresh, setRefresh] = useState(false);

@@ -5,6 +5,7 @@ import { Button, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import OutputPerSecondCode from './OutputPerSecondCode';
 import TrafficLights from './TrafficLights';
+import LoadImage from './LoadImage';
 
 const PromiseExercise = () => {
   const [refresh, setRefresh] = useState(false);
@@ -22,8 +23,8 @@ const PromiseExercise = () => {
     },
     {
       key: '3',
-      label: 'Tab 3',
-      children: 'Content of Tab Pane 3',
+      label: '异步加载图片',
+      children: <LoadImage />,
     },
   ];
 
